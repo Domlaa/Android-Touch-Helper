@@ -1,4 +1,7 @@
-apply plugin: 'com.android.application'
+plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+}
 
 // http://www.race604.com/android-auto-version/
 // use git count as build number, as current date as build version
@@ -56,6 +59,10 @@ android {
         }
     }
 
+    viewBinding {
+        enabled = true
+    }
+
     // http://www.sollyu.com/android-apk-studio-generated-automatically-appends-a-version-number/
     android.applicationVariants.all { variant ->
         variant.outputs.all { output ->
@@ -81,6 +88,8 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
     implementation 'com.google.code.gson:gson:2.9.0'
+
+    implementation 'androidx.core:core-ktx:1.7.0'
 
     // https://developer.android.com/jetpack/androidx/releases/preference?hl=zh-cn
     implementation 'androidx.preference:preference:1.1.1'
