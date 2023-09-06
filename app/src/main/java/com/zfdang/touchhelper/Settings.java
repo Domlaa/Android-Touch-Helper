@@ -46,6 +46,7 @@ public class Settings {
 
         // init all settings from SharedPreferences
         bSkipAdNotification = mPreference.getBoolean(SKIP_AD_NOTIFICATION, true);
+        excludeRecent = mPreference.getBoolean(EXCLUDE_RECENT, false);
 
         // initial duration of skip ad process
         iSkipAdDuration = mPreference.getInt(SKIP_AD_DURATION, 4);
@@ -105,6 +106,20 @@ public class Settings {
         if (this.bSkipAdNotification != bSkipAdNotification) {
             this.bSkipAdNotification = bSkipAdNotification;
             mEditor.putBoolean(SKIP_AD_NOTIFICATION, this.bSkipAdNotification);
+            mEditor.apply();
+        }
+    }
+
+    // notification on skip ads?
+    private static final String EXCLUDE_RECENT = "EXCLUDE_RECENT";
+    private boolean excludeRecent;
+    public boolean isExcludeRecent() {
+        return excludeRecent;
+    }
+    public void setIsExcludeRecent(boolean excludeRecent) {
+        if (this.excludeRecent != bSkipAdNotification) {
+            this.excludeRecent = excludeRecent;
+            mEditor.putBoolean(EXCLUDE_RECENT, this.excludeRecent);
             mEditor.apply();
         }
     }

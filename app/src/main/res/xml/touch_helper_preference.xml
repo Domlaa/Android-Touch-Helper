@@ -11,6 +11,13 @@
             app:summaryOn="显示跳过通知"
             app:title="跳过广告时显示通知" />
 
+        <CheckBoxPreference
+            app:icon="@drawable/ic_hide"
+            app:key="exclude_recent"
+            app:summaryOff="未隐藏"
+            app:summaryOn="已隐藏"
+            app:title="在最近任务中隐藏" />
+
         <SeekBarPreference
             app:key="skip_ad_duration"
             app:icon="@drawable/ic_duration"

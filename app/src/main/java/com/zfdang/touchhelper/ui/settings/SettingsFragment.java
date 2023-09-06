@@ -39,6 +39,7 @@ import com.zfdang.touchhelper.R;
 import com.zfdang.touchhelper.Settings;
 import com.zfdang.touchhelper.TouchHelperService;
 import com.zfdang.touchhelper.Utilities;
+import com.zfdang.touchhelper.utils.CommUtils;
 
 import net.sourceforge.pinyin4j.PinyinHelper;
 import net.sourceforge.pinyin4j.format.HanyuPinyinOutputFormat;
@@ -101,14 +102,21 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         CheckBoxPreference notification = findPreference("skip_ad_notification");
         if(notification != null) {
             notification.setChecked(mSetting.isSkipAdNotification());
-            notification.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
-                @Override
-                public boolean onPreferenceChange(Preference preference, Object newValue) {
-                    Boolean value = (Boolean) newValue;
-                    mSetting.setSkipAdNotification(value);
+            notification.setOnPreferenceChangeListener((preference, newValue) -> {
+                Boolean value = (Boolean) newValue;
+                mSetting.setSkipAdNotification(value);
+                return true;
+            });
+        }
 
-                    return true;
-                }
+        CheckBoxPreference excludeRecent = findPreference("exclude_recent");
+        if(excludeRecent != null) {
+            excludeRecent.setChecked(mSetting.isExcludeRecent());
+            excludeRecent.setOnPreferenceChangeListener((preference, newValue) -> {
+                Boolean value = (Boolean) newValue;
+                CommUtils.setExcludeFromRecent(requireActivity(), value);
+                mSetting.setIsExcludeRecent(value);
+                return true;
             });
         }
 
@@ -119,18 +127,15 @@ public class SettingsFragment extends PreferenceFragmentCompat {
             duration.setUpdatesContinuously(true);
             duration.setValue(mSetting.getSkipAdDuration());
 
-            duration.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
-                @Override
-                public boolean onPreferenceChange(Preference preference, Object newValue) {
-                    try {
-                        int value = (int) newValue;
-                        mSetting.setSkipAdDuration(value);
-                    } catch (ClassCastException e) {
+            duration.setOnPreferenceChangeListener((preference, newValue) -> {
+                try {
+                    int value = (int) newValue;
+                    mSetting.setSkipAdDuration(value);
+                } catch (ClassCastException e) {
 
-                    }
-
-                    return true;
                 }
+
+                return true;
             });
         }
 
@@ -139,17 +144,14 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         EditTextPreference textKeyWords = findPreference("setting_key_words");
         if(textKeyWords != null) {
             textKeyWords.setText(mSetting.getKeyWordsAsString());
-            textKeyWords.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
-                @Override
-                public boolean onPreferenceChange(Preference preference, Object newValue) {
-                    String text = newValue.toString();
-                    mSetting.setKeyWordList(text);
+            textKeyWords.setOnPreferenceChangeListener((preference, newValue) -> {
+                String text = newValue.toString();
+                mSetting.setKeyWordList(text);
 
-                    // notify accessibility to refresh packages
-                    TouchHelperService.dispatchAction(TouchHelperService.ACTION_REFRESH_KEYWORDS);
+                // notify accessibility to refresh packages
+                TouchHelperService.dispatchAction(TouchHelperService.ACTION_REFRESH_KEYWORDS);
 
-                    return true;
-                }
+                return true;
             });
         }
 
