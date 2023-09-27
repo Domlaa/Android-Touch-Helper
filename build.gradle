@@ -28,6 +28,10 @@ allprojects {
     repositories {
         google()
         jcenter()
+
+        maven {
+            url "C:\\Users\\ning\\.m2\\repository"
+        }
     }
 }
 

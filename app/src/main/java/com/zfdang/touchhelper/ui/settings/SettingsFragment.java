@@ -33,6 +33,7 @@ import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.SeekBarPreference;
 
+import com.domla.enword.ui.StatisticsActivity;
 import com.zfdang.touchhelper.PackagePositionDescription;
 import com.zfdang.touchhelper.PackageWidgetDescription;
 import com.zfdang.touchhelper.R;
@@ -339,6 +340,14 @@ public class SettingsFragment extends PreferenceFragmentCompat {
                     }
                     return true;
                 }
+            });
+        }
+
+        Preference enword_statis = findPreference("enword_statis");
+        if(enword_statis != null) {
+            enword_statis.setOnPreferenceClickListener(preference -> {
+                startActivity(new Intent(requireActivity(), StatisticsActivity.class));
+                return true;
             });
         }
 

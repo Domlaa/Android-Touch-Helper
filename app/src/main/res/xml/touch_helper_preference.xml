@@ -52,6 +52,13 @@
             app:summary="手动添加程序的跳过按钮或者跳过区域"
             app:title="添加程序的跳过方法" />
 
+        <Preference
+            app:key="enword_statis"
+            app:icon="@drawable/ic_target"
+            app:summary="已收录的单词词库"
+            app:title="词库详情" />
+
+
         <MultiSelectListPreference
             app:key="setting_activity_widgets"
             app:icon="@drawable/ic_activity_widget"

@@ -16,12 +16,12 @@ def appVersion = getDate()
 
 
 android {
-    compileSdkVersion 31
+    compileSdkVersion 33
 
     defaultConfig {
         applicationId "com.zfdang.touchhelper"
         minSdkVersion 26
-        targetSdkVersion 31
+        targetSdkVersion 33
         versionCode gitVersion
         versionName appVersion
 
@@ -90,6 +90,9 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.9.0'
 
     implementation 'androidx.core:core-ktx:1.7.0'
+
+    implementation "com.domla.android.libs:commcore:1.0.0"
+    implementation "com.domla.android.libs:enword:1.0.0"
 
     // https://developer.android.com/jetpack/androidx/releases/preference?hl=zh-cn
     implementation 'androidx.preference:preference:1.1.1'

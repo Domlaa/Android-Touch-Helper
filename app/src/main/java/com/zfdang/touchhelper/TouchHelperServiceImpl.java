@@ -33,6 +33,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.domla.enword.data.WordPool;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -451,7 +453,7 @@ public class TouchHelperServiceImpl {
      */
     private boolean skipAdByKeywords(AccessibilityNodeInfo node) {
         if (BuildConfig.DEBUG) {
-            Log.d(TAG, "skipAdByKeywords triggered: " + Utilities.describeAccessibilityNode(node));
+            //Log.d(TAG, "skipAdByKeywords triggered: " + Utilities.describeAccessibilityNode(node));
         }
         CharSequence description = node.getContentDescription();
         CharSequence text = node.getText();
@@ -484,7 +486,10 @@ public class TouchHelperServiceImpl {
             if (!clickedWidgets.contains(nodeDesc)) {
                 clickedWidgets.add(nodeDesc);
 
-                ShowToastInIntentService("正在根据关键字跳过广告...");
+                String word = WordPool.INSTANCE.getDisplayWordStr();
+                Log.d(TAG, "moji: " + word);
+                System.out.println("moji  word " + word);
+                ShowToastInIntentService(word);
                 boolean clicked = node.performAction(AccessibilityNodeInfo.ACTION_CLICK);
                 if (BuildConfig.DEBUG) {
                     Log.d(TAG, "self clicked = " + clicked);
@@ -600,11 +605,13 @@ public class TouchHelperServiceImpl {
      * 模拟点击
      */
     private boolean click(int X, int Y, long start_time, long duration) {
+        new Throwable("click trace").printStackTrace();
         Path path = new Path();
         path.moveTo(X, Y);
         GestureDescription.Builder builder = new GestureDescription.Builder()
                 .addStroke(new GestureDescription.StrokeDescription(path, start_time, duration));
         return service.dispatchGesture(builder.build(), null, null);
+        //return true;
     }
 
     /**
@@ -984,7 +991,7 @@ public class TouchHelperServiceImpl {
         // show one toast in 5 seconds only
         if(mSetting.isSkipAdNotification()) {
             receiverHandler.post(() -> {
-                Toast toast = Toast.makeText(service, sText, Toast.LENGTH_SHORT);
+                Toast toast = Toast.makeText(service, sText, Toast.LENGTH_LONG);
                 toast.show();
             });
         };
